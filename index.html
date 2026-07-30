@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -161,4 +162,172 @@
     }
 </script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolão Pro</title>
+    <link rel="icon" type="image/svg+xml" href="icone.svg">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --text-main: #e2e8f0;
+            --accent-neon: #00ff9d;
+            --accent-blue: #38bdf8;
+            --border-glow: #1e293b;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.05);
+        }
+
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { color: var(--accent-neon); font-size: 1.8rem; margin-bottom: 5px; text-transform: uppercase; }
+        header p { color: #64748b; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        .form-group label { color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        
+        input {
+            background: #000;
+            border: 1px solid var(--border-glow);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .jogo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        .confronto-nome { font-weight: 700; color: #fff; font-size: 0.95rem; }
+
+        .placar-inputs { display: flex; gap: 8px; align-items: center; }
+        .placar-inputs input {
+            width: 40px;
+            text-align: center;
+            font-weight: bold;
+            background: #0f0f0f;
+        }
+
+        .btn-enviar {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-neon));
+            color: #000;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .btn-enviar:hover { transform: scale(1.02); }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <header>
+        <h1>PALPITE BOLÃO</h1>
+        <p>Faça seu palpite</p>
+    </header>
+
+    <form id="form-bolao" onsubmit="salvarPalpites(event)">
+        <div class="form-group">
+            <label>NOME DO PARTICIPANTE</label>
+            <input type="text" id="nome" placeholder="Seu nome aqui..." required>
+        </div>
+
+        <div class="jogos-grid" style="margin-top: 20px;">
+            <script>
+                const confrontos = [
+                    { t1: "VAS", t2: "FLU" },
+                    { t1: "CAM", t2: "JUV" },
+                    { t1: "SAN", t2: "REM" },
+                    { t1: "PAL", t2: "FOR" },
+                    { t1: "MIR", t2: "GRE" },
+                    { t1: "CHA", t2: "CRU" },
+                    { t1: "INT", t2: "COR" },
+                    { t1: "CAP", t2: "VIT" }
+                ];
+
+                confrontos.forEach((jogo, i) => {
+                    const num = i + 1;
+                    document.write(`
+                        <div class="jogo-item">
+                            <span class="confronto-nome">${jogo.t1} <span style="color:#64748b">x</span> ${jogo.t2}</span>
+                            <div class="placar-inputs">
+                                <input type="number" id="j${num}_t1" min="0" placeholder="0">
+                                <input type="number" id="j${num}_t2" min="0" placeholder="0">
+                            </div>
+                        </div>
+                    `);
+                });
+            </script>
+        </div>
+        <button type="submit" class="btn-enviar">CONFIRMAR PALPITES</button>
+    </form>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCxWK8_GMj6K75p3_scifj5w5M42UrizoU",
+        databaseURL: "https://bolao-bec5c-default-rtdb.firebaseio.com",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database().ref('bolao_dados');
+
+    function salvarPalpites(event) {
+        event.preventDefault();
+        const nome = document.getElementById('nome').value.trim();
+        let palpites = [];
+        
+        for (let i = 1; i <= 8; i++) {
+            let v1 = document.getElementById(`j${i}_t1`).value;
+            let v2 = document.getElementById(`j${i}_t2`).value;
+            
+            // Se estiver vazio, salva como "-" ou outro valor padrão
+            let placar = (v1 === "" || v2 === "") ? "-" : `${v1}x${v2}`;
+            palpites.push(placar);
+        }
+        
+        db.push({ nome, palpites, status: 'Pendente', dataEnvio: new Date().toLocaleString('pt-BR') }, () => {
+            alert("Palpite registrado com sucesso!");
+            document.getElementById('form-bolao').reset();
+        });
+    }
+</script>
+</body>
+>>>>>>> 4023aee8f8658d444842a628b11567e3598b3a01
 </html>
