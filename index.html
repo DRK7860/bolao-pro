@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolão Oficial</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Teko:wght@500&display=swap');
+
+        :root {
+            --verde-copa: #008744;
+            --amarelo-copa: #ffdf00;
+            --branco: #ffffff;
+            --sombra: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        body {
+            background: linear-gradient(135deg, #004d26, #008744);
+            font-family: 'Roboto Condensed', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .cartela {
+            background: var(--branco);
+            width: 100%;
+            max-width: 400px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--sombra);
+            border: 8px solid var(--amarelo-copa);
+        }
+
+        .header-top {
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
+        .header-top h1 { 
+            font-family: 'Teko', sans-serif;
+            font-size: 3rem;
+            color: var(--verde-copa);
+            margin: 0;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .input-nome {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            font-size: 1.1rem;
+        }
+
+        .jogo-linha {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .time { font-size: 1.1rem; font-weight: bold; color: #333; }
+        .time.direita { text-align: right; }
+
+        .placar {
+            display: flex;
+            gap: 5px;
+        }
+
+        .placar input {
+            width: 35px;
+            height: 35px;
+            text-align: center;
+            border: 2px solid var(--verde-copa);
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .btn-confirmar {
+            width: 100%;
+            background: var(--verde-copa);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 25px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cartela">
+    <div class="header-top">
+        <h1>Bolão</h1>
+        <p>Preencha os resultados</p>
+    </div>
+
+    <form id="form-bolao" onsubmit="salvarPalpites(event)">
+        <input type="text" id="nome" class="input-nome" placeholder="NOME DO APOSTADOR" required>
+
+        <div id="lista-jogos">
+            <script>
+                const confrontos = [
+                    { t1: "VAS", t2: "FLU" }, { t1: "CAM", t2: "JUV" },
+                    { t1: "SAN", t2: "REM" }, { t1: "PAL", t2: "FOR" },
+                    { t1: "MIR", t2: "GRE" }, { t1: "CHA", t2: "CRU" },
+                    { t1: "INT", t2: "COR" }, { t1: "CAP", t2: "VIT" }
+                ];
+                confrontos.forEach((j, i) => {
+                    document.write(`
+                        <div class="jogo-linha">
+                            <span class="time">${j.t1}</span>
+                            <div class="placar">
+                                <input type="number" id="j${i+1}_t1" min="0">
+                                <input type="number" id="j${i+1}_t2" min="0">
+                            </div>
+                            <span class="time direita">${j.t2}</span>
+                        </div>
+                    `);
+                });
+            </script>
+        </div>
+        <button type="submit" class="btn-confirmar">Enviar Palpite</button>
+    </form>
+</div>
+
+<!-- Lógica Firebase igual à anterior -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+    const firebaseConfig = { apiKey: "AIzaSyCxWK8_GMj6K75p3_scifj5w5M42UrizoU", databaseURL: "https://bolao-bec5c-default-rtdb.firebaseio.com" };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database().ref('bolao_dados');
+
+    function salvarPalpites(event) {
+        event.preventDefault();
+        const nome = document.getElementById('nome').value.trim();
+        let palpites = [];
+        for (let i = 1; i <= 8; i++) {
+            let v1 = document.getElementById(`j${i}_t1`).value;
+            let v2 = document.getElementById(`j${i}_t2`).value;
+            palpites.push((v1 === "" || v2 === "") ? "-" : `${v1}x${v2}`);
+        }
+        db.push({ nome, palpites, status: 'Pendente', dataEnvio: new Date().toLocaleString('pt-BR') }, () => {
+            alert("Cartela enviada com sucesso!");
+            document.getElementById('form-bolao').reset();
+        });
+    }
+</script>
+</body>
+</html>
