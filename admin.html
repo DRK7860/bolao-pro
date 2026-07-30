@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel ADM — Bolão Bet</title>
-    <!-- Configurações de PWA e Estilos (Otimizados) -->
     <style>
         :root {
             --bg-color: #0f172a; --card-bg: #1e293b; --text-color: #f8fafc;
@@ -14,17 +13,53 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 1200px; }
-        /* Adicione aqui o restante do seu CSS do Painel ADM */
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Estrutura da tabela de administração -->
+        <!-- Tabela -->
+        <table id="tabelaParticipantes" style="width: 100%; border-collapse: collapse; color: white;">
+            <thead>
+                <tr>
+                    <th colspan="11" style="text-align: right; padding-bottom: 10px;">
+                        <button onclick="adicionarLinha()" style="background: var(--accent-green); color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 4px; font-weight: bold;">+ Adicionar Participante</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th style="padding: 10px;">APOSTADOR</th>
+                    <th style="padding: 10px;">STATUS</th>
+                    <th style="padding: 10px;">J1</th>
+                    <th style="padding: 10px;">J2</th>
+                    <th style="padding: 10px;">J3</th>
+                    <th style="padding: 10px;">J4</th>
+                    <th style="padding: 10px;">J5</th>
+                    <th style="padding: 10px;">J6</th>
+                    <th style="padding: 10px;">J7</th>
+                    <th style="padding: 10px;">J8</th>
+                    <th style="padding: 10px;">AÇÕES</th>
+                </tr>
+            </thead>
+            <tbody id="listaParticipantes">
+            </tbody>
+        </table>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <script>
-        // Configuração Firebase e Funções de cálculo e renderização
+        function adicionarLinha() {
+            const tbody = document.getElementById('listaParticipantes');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" placeholder="Nome" style="width: 90%; padding: 5px;"></td>
+                <td><select><option>Pendente</option><option>Pago</option></select></td>
+                ${'<td><input type="text" style="width: 40px; padding: 5px;"></td>'.repeat(8)}
+                <td><button onclick="removerLinha(this)" style="background: var(--accent-red); color: white; border: none; padding: 5px 10px; cursor: pointer;">X</button></td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function removerLinha(btn) {
+            btn.parentNode.parentNode.remove();
+        }
     </script>
 </body>
 </html>
