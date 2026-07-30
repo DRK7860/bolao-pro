@@ -1,6 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/ranking", "destination": "/ranking.html" },
-    { "source": "/palpite", "destination": "/palpite.html" }
-  ]
-}
