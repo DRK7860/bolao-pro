@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Fundo de Cassino / Bet Premium -->
+    <radialGradient id="bg-bet" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1a233a"/>
+      <stop offset="60%" stop-color="#0a0e17"/>
+      <stop offset="100%" stop-color="#020408"/>
+    </radialGradient>
+
+    <!-- Gradiente Dourado (Ouro de Aposta) -->
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe678"/>
+      <stop offset="50%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#996800"/>
+    </linearGradient>
+
+    <!-- Gradiente Verde Neon (Lucro/Green) -->
+    <linearGradient id="green-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00ff66"/>
+      <stop offset="100%" stop-color="#00a843"/>
+    </linearGradient>
+
+    <!-- Efeito de Brilho Intensificado -->
+    <filter id="glow-gold" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="glow-green" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Fundo do Ícone estilo App do Celular -->
+  <rect width="512" height="512" rx="115" fill="url(#bg-bet)"/>
+  
+  <!-- Borda Dupla Dourada Premium -->
+  <rect x="14" y="14" width="484" height="484" rx="101" fill="none" stroke="url(#gold-grad)" stroke-width="6" opacity="0.8"/>
+  <rect x="22" y="22" width="468" height="468" rx="93" fill="none" stroke="#ffe678" stroke-width="2" opacity="0.3"/>
+
+  <!-- Moeda / Ficha Central de Aposta -->
+  <g transform="translate(256, 215)">
+    <!-- Brilho do Fundo da Ficha -->
+    <circle cx="0" cy="0" r="115" fill="none" stroke="url(#gold-grad)" stroke-width="8" filter="url(#glow-gold)" opacity="0.6"/>
+    
+    <!-- Base Dourada da Ficha -->
+    <circle cx="0" cy="0" r="105" fill="#0d1321" stroke="url(#gold-grad)" stroke-width="10"/>
+    <circle cx="0" cy="0" r="88" fill="none" stroke="#ffe678" stroke-width="3" stroke-dasharray="14 10"/>
+
+    <!-- Ícone de Raio / Aposta Rápida (Estilo Bet) -->
+    <path d="M12 -65 L-35 5 L2 -2 L-12 65 L35 -5 L-2 2 Z" fill="url(#green-grad)" filter="url(#glow-green)"/>
+  </g>
+
+  <!-- Texto "BOLÃO" estilo Marca de Cassino/Bet -->
+  <text x="256" y="410" 
+        font-family="'Impact', 'Segoe UI', sans-serif" 
+        font-size="78" 
+        font-weight="900" 
+        fill="url(#gold-grad)" 
+        text-anchor="middle" 
+        letter-spacing="4"
+        filter="url(#glow-gold)">
+    BOLÃO
+  </text>
+
+  <!-- Tag "BET" Neon em Verde no Topo -->
+  <rect x="206" y="55" width="100" height="32" rx="8" fill="#00ff66" opacity="0.15"/>
+  <rect x="206" y="55" width="100" height="32" rx="8" fill="none" stroke="#00ff66" stroke-width="2"/>
+  <text x="256" y="77" 
+        font-family="'Segoe UI', sans-serif" 
+        font-size="18" 
+        font-weight="900" 
+        fill="#00ff66" 
+        text-anchor="middle" 
+        letter-spacing="3"
+        filter="url(#glow-green)">
+    PRO
+  </text>
+</svg>
