@@ -14,19 +14,26 @@
             --exato: #16a34a; --parcial: #ca8a04; --erro: #991b1b;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; }
+        body { background-color: var(--bg-color); color: var(--text-color); padding: 10px; }
         
+        h1 { text-align: center; margin-bottom: 20px; font-size: 1.5rem; }
+
         /* Painel de Placar Oficial */
-        .painel-placar { background: var(--card-bg); padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid var(--border-color); }
-        .grid-placar { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
-        .input-group { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .painel-placar { background: var(--card-bg); padding: 10px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border-color); }
+        .grid-placar { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+        .input-group { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .input-group label { font-size: 0.7rem; font-weight: bold; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; color: white; font-size: 0.9rem; }
-        th, td { padding: 8px; border: 1px solid var(--border-color); text-align: center; }
+        /* Container da Tabela (O segredo para Mobile) */
+        .table-container { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         
-        .header-shield { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 5px; }
-        .header-shield img { width: 20px; height: 20px; }
-        input[type="text"] { width: 50px; text-align: center; background: #334155; color: white; border: 1px solid #475569; padding: 5px; border-radius: 4px; }
+        table { width: 100%; min-width: 600px; border-collapse: collapse; color: white; font-size: 0.85rem; }
+        th, td { padding: 6px; border: 1px solid var(--border-color); text-align: center; }
+        
+        .header-shield { display: flex; align-items: center; justify-content: center; gap: 2px; margin-top: 3px; }
+        .header-shield img { width: 18px; height: 18px; }
+        
+        input[type="text"] { width: 40px; text-align: center; background: #334155; color: white; border: 1px solid #475569; padding: 4px; border-radius: 4px; }
         
         .acerto-exato { background-color: var(--exato); }
         .acerto-parcial { background-color: var(--parcial); }
@@ -37,9 +44,8 @@
     <div class="container">
         <h1>Painel ADM</h1>
         
-        <!-- Painel de Placar Oficial (Novo Local) -->
         <div class="painel-placar">
-            <h3 style="text-align: center;">Placar Oficial</h3>
+            <h3 style="text-align: center; margin-bottom: 8px; font-size: 1rem;">Placar Oficial</h3>
             <div class="grid-placar">
                 <div class="input-group"><label>J1</label><input type="text" id="placar-0" onchange="atualizarPlacarOficial(0, this.value)"></div>
                 <div class="input-group"><label>J2</label><input type="text" id="placar-1" onchange="atualizarPlacarOficial(1, this.value)"></div>
@@ -52,23 +58,25 @@
             </div>
         </div>
 
-        <table id="tabelaParticipantes">
-            <thead>
-                <tr>
-                    <th>Nº</th><th>Apostador</th><th>Status</th>
-                    <th>J1<div class="header-shield"><img src="Escudos/vasco.png">x<img src="Escudos/fluminense.png"></div></th>
-                    <th>J2<div class="header-shield"><img src="Escudos/atletico-mg.png">x<img src="Escudos/juventude.png"></div></th>
-                    <th>J3<div class="header-shield"><img src="Escudos/santos.png">x<img src="Escudos/remo.png"></div></th>
-                    <th>J4<div class="header-shield"><img src="Escudos/palmeiras.png">x<img src="Escudos/fortaleza.png"></div></th>
-                    <th>J5<div class="header-shield"><img src="Escudos/mirassol.png">x<img src="Escudos/gremio.png"></div></th>
-                    <th>J6<div class="header-shield"><img src="Escudos/chapecoense.png">x<img src="Escudos/cruzeiro.png"></div></th>
-                    <th>J7<div class="header-shield"><img src="Escudos/internacional.png">x<img src="Escudos/corinthians.png"></div></th>
-                    <th>J8<div class="header-shield"><img src="Escudos/atletico-paranaense.png">x<img src="Escudos/vitoria.png"></div></th>
-                    <th>Total</th><th></th>
-                </tr>
-            </thead>
-            <tbody id="tabela-corpo"></tbody>
-        </table>
+        <div class="table-container">
+            <table id="tabelaParticipantes">
+                <thead>
+                    <tr>
+                        <th>Nº</th><th>Apostador</th><th>Status</th>
+                        <th>J1<div class="header-shield"><img src="Escudos/vasco.png">x<img src="Escudos/fluminense.png"></div></th>
+                        <th>J2<div class="header-shield"><img src="Escudos/atletico-mg.png">x<img src="Escudos/juventude.png"></div></th>
+                        <th>J3<div class="header-shield"><img src="Escudos/santos.png">x<img src="Escudos/remo.png"></div></th>
+                        <th>J4<div class="header-shield"><img src="Escudos/palmeiras.png">x<img src="Escudos/fortaleza.png"></div></th>
+                        <th>J5<div class="header-shield"><img src="Escudos/mirassol.png">x<img src="Escudos/gremio.png"></div></th>
+                        <th>J6<div class="header-shield"><img src="Escudos/chapecoense.png">x<img src="Escudos/cruzeiro.png"></div></th>
+                        <th>J7<div class="header-shield"><img src="Escudos/internacional.png">x<img src="Escudos/corinthians.png"></div></th>
+                        <th>J8<div class="header-shield"><img src="Escudos/atletico-paranaense.png">x<img src="Escudos/vitoria.png"></div></th>
+                        <th>Total</th><th></th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-corpo"></tbody>
+            </table>
+        </div>
     </div>
 
     <script>
