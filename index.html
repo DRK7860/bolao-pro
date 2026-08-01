@@ -1,39 +1,31 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel ADM — Bolão Bet</title>
-    <style>
-        :root {
-            --bg-color: #0f172a; --card-bg: #1e293b; --text-color: #f8fafc;
-            --accent-green: #22c55e; --accent-red: #ef4444;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 1200px; }
-        table { width: 100%; border-collapse: collapse; color: white; margin-top: 20px; }
-        th, td { padding: 10px; border: 1px solid #334155; }
     </style>
 </head>
 <body>
     <div class="container">
-        <button onclick="adicionarLinha()" style="background: var(--accent-green); color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px; font-weight: bold;">+ Adicionar Participante</button>
-        
-        <table id="tabelaParticipantes">
+        <!-- Tabela -->
+        <table id="tabelaParticipantes" style="width: 100%; border-collapse: collapse; color: white;">
             <thead>
                 <tr>
-                    <th>APOSTADOR</th><th>STATUS</th>
-                    <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>J6</th><th>J7</th><th>J8</th>
-                    <th>AÇÕES</th>
+                    <th colspan="11" style="text-align: right; padding-bottom: 10px;">
+                        <button onclick="adicionarLinha()" style="background: var(--accent-green); color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 4px; font-weight: bold;">+ Adicionar Participante</button>
+                    </th>
                 </tr>
-                <tr style="background: var(--card-bg);">
-                    <td colspan="2">Jogos</td>
-                    <td>Vasco x Flu</td><td>Atl x Juv</td><td>San x Rem</td><td>Pal x For</td><td>Mir x Gre</td><td>Cha x Cru</td><td>Int x Cor</td><td>Atl x Vit</td>
-                    <td></td>
+                <tr>
+                    <th style="padding: 10px;">APOSTADOR</th>
+                    <th style="padding: 10px;">STATUS</th>
+                    <th style="padding: 10px;">J1</th>
+                    <th style="padding: 10px;">J2</th>
+                    <th style="padding: 10px;">J3</th>
+                    <th style="padding: 10px;">J4</th>
+                    <th style="padding: 10px;">J5</th>
+                    <th style="padding: 10px;">J6</th>
+                    <th style="padding: 10px;">J7</th>
+                    <th style="padding: 10px;">J8</th>
+                    <th style="padding: 10px;">AÇÕES</th>
                 </tr>
             </thead>
-            <tbody id="listaParticipantes"></tbody>
+            <tbody id="listaParticipantes">
+            </tbody>
         </table>
     </div>
 
@@ -42,14 +34,17 @@
             const tbody = document.getElementById('listaParticipantes');
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><input type="text" placeholder="Nome" style="width: 90%;"></td>
+                <td><input type="text" placeholder="Nome" style="width: 90%; padding: 5px;"></td>
                 <td><select><option>Pendente</option><option>Pago</option></select></td>
-                ${'<td><input type="text" style="width: 40px;"></td>'.repeat(8)}
+                ${'<td><input type="text" style="width: 40px; padding: 5px;"></td>'.repeat(8)}
                 <td><button onclick="removerLinha(this)" style="background: var(--accent-red); color: white; border: none; padding: 5px 10px; cursor: pointer;">X</button></td>
             `;
             tbody.appendChild(tr);
         }
-        function removerLinha(btn) { btn.parentNode.parentNode.remove(); }
+
+        function removerLinha(btn) {
+            btn.parentNode.parentNode.remove();
+        }
     </script>
 </body>
 </html>
