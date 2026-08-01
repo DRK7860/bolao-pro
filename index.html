@@ -155,7 +155,8 @@
                     <option value="Pendente" ${p.status === 'Pendente'?'selected':''}>Pendente</option>
                     <option value="Pago" ${p.status === 'Pago'?'selected':''}>Pago</option>
                 </select></td>
-                ${colunasJogos}<td>${p.totalPontos} pts</td><td><button onclick="removerApostador('${p.id}')" style="cursor:pointer; background:transparent; border:none; color:white;">✕</button></td>`;
+                ${colunasJogos}<td>${p.totalPontos} pts</td>// A CORREÇÃO (CERTA - Manda o ID e o Nome)
+<td><button onclick="removerApostador('${p.id}', '${p.nome}')" style="cursor:pointer; background:transparent; border:none; color:white;">✕</button></td>`;
                 tbody.appendChild(tr);
             });
         }
