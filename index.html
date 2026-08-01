@@ -18,13 +18,15 @@
         
         h1 { text-align: center; margin-bottom: 20px; font-size: 1.5rem; }
 
-        /* Painel de Placar Oficial */
+        /* Botão de Status */
+        .status-container { text-align: center; margin-bottom: 15px; }
+        #btn-status { padding: 10px 20px; border-radius: 20px; border: none; cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: background 0.3s; }
+
         .painel-placar { background: var(--card-bg); padding: 10px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border-color); }
         .grid-placar { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
         .input-group { display: flex; flex-direction: column; align-items: center; gap: 2px; }
         .input-group label { font-size: 0.7rem; font-weight: bold; }
         
-        /* Container da Tabela (O segredo para Mobile) */
         .table-container { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         
         table { width: 100%; min-width: 600px; border-collapse: collapse; color: white; font-size: 0.85rem; }
@@ -41,8 +43,14 @@
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>Painel ADM</h1>
+        
+        <!-- Botão de controle de status -->
+        <div class="status-container">
+            <button id="btn-status" onclick="alternarStatus()">Carregando status...</button>
+        </div>
         
         <div class="painel-placar">
             <h3 style="text-align: center; margin-bottom: 8px; font-size: 1rem;">Placar Oficial</h3>
@@ -92,7 +100,30 @@
         firebase.initializeApp(firebaseConfig);
         const dbApostadores = firebase.database().ref('bolao_dados');
         const dbPlacares = firebase.database().ref('bolao_placares');
+        const dbStatus = firebase.database().ref('configuracoes/apostas_abertas');
 
+        // Monitorar Status apenas para atualizar o botão
+        dbStatus.on('value', (snapshot) => {
+            const abertas = snapshot.val();
+            const btn = document.getElementById('btn-status');
+            
+            if (abertas === false) {
+                btn.innerText = "🔒 Apostas Fechadas";
+                btn.style.backgroundColor = "#ef4444";
+            } else {
+                btn.innerText = "✅ Apostas Abertas";
+                btn.style.backgroundColor = "#22c55e";
+            }
+        });
+
+        function alternarStatus() {
+            dbStatus.once('value', (s) => { 
+                const novoStatus = !s.val();
+                dbStatus.set(novoStatus);
+            });
+        }
+
+        // --- Lógica original mantida ---
         let apostadoresMap = {};
         let placaresOficiais = ['', '', '', '', '', '', '', ''];
 
