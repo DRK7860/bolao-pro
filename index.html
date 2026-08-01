@@ -162,7 +162,12 @@
 
         function atualizarPlacarOficial(jIndex, valor) { placaresOficiais[jIndex] = valor.trim(); dbPlacares.set(placaresOficiais); }
         function atualizarStatus(id, valor) { dbApostadores.child(id).update({ status: valor }); }
-        function removerApostador(id) { if (confirm("Apagar?")) dbApostadores.child(id).remove(); }
+        function removerApostador(id, nomeApostador) {
+            // Usamos crases (`) para montar a mensagem dinâmica com o nome
+            if (confirm(`Tem certeza que deseja apagar permanentemente a aposta de "${nomeApostador}"? Esta ação não pode ser desfeita.`)) {
+                dbApostadores.child(id).remove();
+            }
+        }
     </script>
 </body>
 </html>
