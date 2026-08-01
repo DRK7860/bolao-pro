@@ -4,62 +4,151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel ADM — Bolão Bet</title>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
     <style>
         :root {
             --bg-color: #0f172a; --card-bg: #1e293b; --text-color: #f8fafc;
             --accent-green: #22c55e; --accent-red: #ef4444; --border-color: #334155;
+            --exato: #16a34a; --parcial: #ca8a04; --erro: #991b1b;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 1200px; }
-        table { width: 100%; border-collapse: collapse; color: white; margin-top: 20px; }
-        th, td { padding: 10px; border: 1px solid var(--border-color); text-align: center; }
-        button { cursor: pointer; border: none; border-radius: 4px; padding: 8px 15px; font-weight: bold; }
+        body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; color: white; }
+        th, td { padding: 8px; border: 1px solid var(--border-color); text-align: center; }
+        .acerto-exato { background-color: var(--exato); }
+        .acerto-parcial { background-color: var(--parcial); }
+        .erro-jogo { background-color: var(--erro); }
+        input[type="text"] { width: 40px; text-align: center; }
     </style>
 </head>
 <body>
     <div class="container">
-        <button onclick="adicionarLinha()" style="background: var(--accent-green); color: white; margin-bottom: 10px;">+ Adicionar Participante</button>
-        
+        <h1>Painel ADM</h1>
         <table id="tabelaParticipantes">
             <thead>
+                <!-- Cabeçalho -->
                 <tr>
-                    <th>APOSTADOR</th><th>STATUS</th>
+                    <th>Nº</th><th>APOSTADOR</th><th>Status</th>
                     <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>J6</th><th>J7</th><th>J8</th>
-                    <th>AÇÕES</th>
+                    <th>Total</th><th>Ações</th>
                 </tr>
+                <!-- Linha de Escudos -->
                 <tr style="background: var(--card-bg);">
-                    <td colspan="2">Escudos</td>
-                    <td><img src="Escudos/vasco.png" width="25"> x <img src="Escudos/fluminense.png" width="25"></td>
-                    <td><img src="Escudos/atletico-mg.png" width="25"> x <img src="Escudos/juventude.png" width="25"></td>
-                    <td><img src="Escudos/santos.png" width="25"> x <img src="Escudos/remo.png" width="25"></td>
-                    <td><img src="Escudos/palmeiras.png" width="25"> x <img src="Escudos/fortaleza.png" width="25"></td>
-                    <td><img src="Escudos/mirassol.png" width="25"> x <img src="Escudos/gremio.png" width="25"></td>
-                    <td><img src="Escudos/chapecoense.png" width="25"> x <img src="Escudos/cruzeiro.png" width="25"></td>
-                    <td><img src="Escudos/internacional.png" width="25"> x <img src="Escudos/corinthians.png" width="25"></td>
-                    <td><img src="Escudos/atletico-paranaense.png" width="25"> x <img src="Escudos/vitoria.png" width="25"></td>
-                    <td></td>
+                    <td colspan="3">Escudos</td>
+                    <td><img src="Escudos/vasco.png" width="20">x<img src="Escudos/fluminense.png" width="20"></td>
+                    <td><img src="Escudos/atletico-mg.png" width="20">x<img src="Escudos/juventude.png" width="20"></td>
+                    <td><img src="Escudos/santos.png" width="20">x<img src="Escudos/remo.png" width="20"></td>
+                    <td><img src="Escudos/palmeiras.png" width="20">x<img src="Escudos/fortaleza.png" width="20"></td>
+                    <td><img src="Escudos/mirassol.png" width="20">x<img src="Escudos/gremio.png" width="20"></td>
+                    <td><img src="Escudos/chapecoense.png" width="20">x<img src="Escudos/cruzeiro.png" width="20"></td>
+                    <td><img src="Escudos/internacional.png" width="20">x<img src="Escudos/corinthians.png" width="20"></td>
+                    <td><img src="Escudos/atletico-paranaense.png" width="20">x<img src="Escudos/vitoria.png" width="20"></td>
+                    <td colspan="2"></td>
+                </tr>
+                <!-- Linha de Placar Oficial (onde o Admin digita o resultado) -->
+                <tr>
+                    <td colspan="3">Placar Oficial</td>
+                    <td><input type="text" id="placar-0" onchange="atualizarPlacarOficial(0, this.value)"></td>
+                    <td><input type="text" id="placar-1" onchange="atualizarPlacarOficial(1, this.value)"></td>
+                    <td><input type="text" id="placar-2" onchange="atualizarPlacarOficial(2, this.value)"></td>
+                    <td><input type="text" id="placar-3" onchange="atualizarPlacarOficial(3, this.value)"></td>
+                    <td><input type="text" id="placar-4" onchange="atualizarPlacarOficial(4, this.value)"></td>
+                    <td><input type="text" id="placar-5" onchange="atualizarPlacarOficial(5, this.value)"></td>
+                    <td><input type="text" id="placar-6" onchange="atualizarPlacarOficial(6, this.value)"></td>
+                    <td><input type="text" id="placar-7" onchange="atualizarPlacarOficial(7, this.value)"></td>
+                    <td colspan="2"></td>
                 </tr>
             </thead>
-            <tbody id="listaParticipantes">
-                <!-- Os nomes dos jogadores aparecerão aqui quando você clicar no botão -->
-            </tbody>
+            <!-- O corpo abaixo será preenchido pelo seu Script -->
+            <tbody id="tabela-corpo"></tbody>
         </table>
     </div>
 
     <script>
-        function adicionarLinha() {
-            const tbody = document.getElementById('listaParticipantes');
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><input type="text" placeholder="Nome" style="width: 90%; padding: 5px;"></td>
-                <td><select><option>Pendente</option><option>Pago</option></select></td>
-                ${'<td><input type="text" style="width: 30px; padding: 5px;"></td>'.repeat(8)}
-                <td><button onclick="removerLinha(this)" style="background: var(--accent-red); color: white;">X</button></td>
-            `;
-            tbody.appendChild(tr);
+        // === SEU SCRIPT DO FIREBASE (O QUE VOCÊ ME ENVIOU) ===
+        const firebaseConfig = {
+            apiKey: "AIzaSyCxWK8_GMj6K75p3_scifj5w5M42UrizoU",
+            authDomain: "bolao-bec5c.firebaseapp.com",
+            databaseURL: "https://bolao-bec5c-default-rtdb.firebaseio.com",
+            projectId: "bolao-bec5c",
+            storageBucket: "bolao-bec5c.firebasestorage.app",
+            messagingSenderId: "852932005889",
+            appId: "1:852932005889:web:136229dd5162783d963000"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const dbApostadores = firebase.database().ref('bolao_dados');
+        const dbPlacares = firebase.database().ref('bolao_placares');
+
+        let apostadoresMap = {};
+        let placaresOficiais = ['', '', '', '', '', '', '', ''];
+
+        dbPlacares.on('value', (snapshot) => {
+            placaresOficiais = snapshot.val() || ['', '', '', '', '', '', '', ''];
+            preencherPlacaresOficiaisNaTela();
+            renderizarTabela();
+        });
+
+        dbApostadores.on('value', (snapshot) => {
+            apostadoresMap = snapshot.val() || {};
+            renderizarTabela();
+        });
+
+        function preencherPlacaresOficiaisNaTela() {
+            placaresOficiais.forEach((p, i) => {
+                const el = document.getElementById(`placar-${i}`);
+                if (el) el.value = p || '';
+            });
         }
-        function removerLinha(btn) { btn.parentNode.parentNode.remove(); }
+
+        function calcularPontosJogo(palpite, resultadoOficial) {
+            if (!palpite || !resultadoOficial) return { pts: 0, tipo: 'sem_resultado' };
+            const p = palpite.trim().toLowerCase();
+            const r = resultadoOficial.trim().toLowerCase();
+            if (!p.includes('x') || !r.includes('x')) return { pts: 0, tipo: 'sem_resultado' };
+            const [p1, p2] = p.split('x').map(Number);
+            const [r1, r2] = r.split('x').map(Number);
+            if (isNaN(p1) || isNaN(p2) || isNaN(r1) || isNaN(r2)) return { pts: 0, tipo: 'sem_resultado' };
+            if (p1 === r1 && p2 === r2) return { pts: 15, tipo: 'exato' };
+            const advPalpite = p1 > p2 ? 1 : (p1 < p2 ? 2 : 0);
+            const advResultado = r1 > r2 ? 1 : (r1 < r2 ? 2 : 0);
+            if (advPalpite === advResultado) return { pts: 5, tipo: 'parcial' };
+            return { pts: 0, tipo: 'erro' };
+        }
+
+        function renderizarTabela() {
+            const tbody = document.getElementById('tabela-corpo');
+            tbody.innerHTML = '';
+            let lista = Object.keys(apostadoresMap).map(key => {
+                const p = apostadoresMap[key];
+                let palpites = Array.isArray(p.palpites) ? p.palpites : (p.palpites && typeof p.palpites === 'object' ? Object.values(p.palpites) : ['', '', '', '', '', '', '', '']);
+                let total = 0;
+                palpites.forEach((palpite, i) => { total += calcularPontosJogo(palpite, placaresOficiais[i]).pts; });
+                return { id: key, ...p, palpitesArr: palpites, totalPontos: total };
+            }).filter(p => p.nome && p.nome.trim() !== '');
+
+            lista.sort((a, b) => b.totalPontos !== a.totalPontos ? b.totalPontos - a.totalPontos : (a.nome || '').localeCompare(b.nome || ''));
+
+            lista.forEach((p, index) => {
+                const colunasJogos = Array.from({ length: 8 }).map((_, jIndex) => {
+                    const res = calcularPontosJogo(p.palpitesArr[jIndex] || '', placaresOficiais[jIndex]);
+                    let classe = res.tipo === 'exato' ? 'acerto-exato' : (res.tipo === 'parcial' ? 'acerto-parcial' : (res.tipo === 'erro' ? 'erro-jogo' : ''));
+                    return `<td class="${classe}">${p.palpitesArr[jIndex] || '-'}</td>`;
+                }).join('');
+
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td>${index + 1}º</td><td>${p.nome}</td>
+                <td><select onchange="atualizarStatus('${p.id}', this.value)"><option value="Pendente" ${p.status === 'Pendente'?'selected':''}>Pendente</option><option value="Pago" ${p.status === 'Pago'?'selected':''}>Pago</option></select></td>
+                ${colunasJogos}<td>${p.totalPontos} pts</td><td><button onclick="removerApostador('${p.id}')">✕</button></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function atualizarPlacarOficial(jIndex, valor) { placaresOficiais[jIndex] = valor.trim(); dbPlacares.set(placaresOficiais); }
+        function atualizarStatus(id, valor) { dbApostadores.child(id).update({ status: valor }); }
+        function removerApostador(id) { if (confirm("Apagar?")) dbApostadores.child(id).remove(); }
     </script>
 </body>
 </html>
