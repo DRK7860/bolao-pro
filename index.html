@@ -15,12 +15,18 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; }
+        
+        /* Painel de Placar Oficial */
+        .painel-placar { background: var(--card-bg); padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid var(--border-color); }
+        .grid-placar { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+        .input-group { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        
         table { width: 100%; border-collapse: collapse; margin-top: 20px; color: white; font-size: 0.9rem; }
         th, td { padding: 8px; border: 1px solid var(--border-color); text-align: center; }
         
         .header-shield { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 5px; }
         .header-shield img { width: 20px; height: 20px; }
-        input[type="text"] { width: 45px; text-align: center; background: #334155; color: white; border: 1px solid #475569; padding: 2px; border-radius: 4px; }
+        input[type="text"] { width: 50px; text-align: center; background: #334155; color: white; border: 1px solid #475569; padding: 5px; border-radius: 4px; }
         
         .acerto-exato { background-color: var(--exato); }
         .acerto-parcial { background-color: var(--parcial); }
@@ -30,6 +36,22 @@
 <body>
     <div class="container">
         <h1>Painel ADM</h1>
+        
+        <!-- Painel de Placar Oficial (Novo Local) -->
+        <div class="painel-placar">
+            <h3 style="text-align: center;">Placar Oficial</h3>
+            <div class="grid-placar">
+                <div class="input-group"><label>J1</label><input type="text" id="placar-0" onchange="atualizarPlacarOficial(0, this.value)"></div>
+                <div class="input-group"><label>J2</label><input type="text" id="placar-1" onchange="atualizarPlacarOficial(1, this.value)"></div>
+                <div class="input-group"><label>J3</label><input type="text" id="placar-2" onchange="atualizarPlacarOficial(2, this.value)"></div>
+                <div class="input-group"><label>J4</label><input type="text" id="placar-3" onchange="atualizarPlacarOficial(3, this.value)"></div>
+                <div class="input-group"><label>J5</label><input type="text" id="placar-4" onchange="atualizarPlacarOficial(4, this.value)"></div>
+                <div class="input-group"><label>J6</label><input type="text" id="placar-5" onchange="atualizarPlacarOficial(5, this.value)"></div>
+                <div class="input-group"><label>J7</label><input type="text" id="placar-6" onchange="atualizarPlacarOficial(6, this.value)"></div>
+                <div class="input-group"><label>J8</label><input type="text" id="placar-7" onchange="atualizarPlacarOficial(7, this.value)"></div>
+            </div>
+        </div>
+
         <table id="tabelaParticipantes">
             <thead>
                 <tr>
@@ -42,25 +64,10 @@
                     <th>J6<div class="header-shield"><img src="Escudos/chapecoense.png">x<img src="Escudos/cruzeiro.png"></div></th>
                     <th>J7<div class="header-shield"><img src="Escudos/internacional.png">x<img src="Escudos/corinthians.png"></div></th>
                     <th>J8<div class="header-shield"><img src="Escudos/atletico-paranaense.png">x<img src="Escudos/vitoria.png"></div></th>
-                    <th>Total</th><th></th> <!-- Espaço vazio onde era Ações -->
+                    <th>Total</th><th></th>
                 </tr>
             </thead>
             <tbody id="tabela-corpo"></tbody>
-            <!-- Linha do Placar Oficial movida para o rodapé -->
-            <tfoot style="background: var(--card-bg);">
-                <tr>
-                    <td colspan="3" style="font-weight:bold; text-align: right; padding-right: 20px;">Placar Oficial</td>
-                    <td><input type="text" id="placar-0" onchange="atualizarPlacarOficial(0, this.value)"></td>
-                    <td><input type="text" id="placar-1" onchange="atualizarPlacarOficial(1, this.value)"></td>
-                    <td><input type="text" id="placar-2" onchange="atualizarPlacarOficial(2, this.value)"></td>
-                    <td><input type="text" id="placar-3" onchange="atualizarPlacarOficial(3, this.value)"></td>
-                    <td><input type="text" id="placar-4" onchange="atualizarPlacarOficial(4, this.value)"></td>
-                    <td><input type="text" id="placar-5" onchange="atualizarPlacarOficial(5, this.value)"></td>
-                    <td><input type="text" id="placar-6" onchange="atualizarPlacarOficial(6, this.value)"></td>
-                    <td><input type="text" id="placar-7" onchange="atualizarPlacarOficial(7, this.value)"></td>
-                    <td colspan="2"></td>
-                </tr>
-            </tfoot>
         </table>
     </div>
 
