@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel ADM — Bolão Bet</title>
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     
@@ -16,12 +15,17 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; color: white; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; color: white; font-size: 0.9rem; }
         th, td { padding: 8px; border: 1px solid var(--border-color); text-align: center; }
+        
+        /* Estilo dos Escudos e Inputs */
+        .header-shield { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 5px; }
+        .header-shield img { width: 20px; height: 20px; }
+        input[type="text"] { width: 45px; text-align: center; background: #334155; color: white; border: 1px solid #475569; padding: 2px; border-radius: 4px; }
+        
         .acerto-exato { background-color: var(--exato); }
         .acerto-parcial { background-color: var(--parcial); }
         .erro-jogo { background-color: var(--erro); }
-        input[type="text"] { width: 40px; text-align: center; }
     </style>
 </head>
 <body>
@@ -29,28 +33,22 @@
         <h1>Painel ADM</h1>
         <table id="tabelaParticipantes">
             <thead>
-                <!-- Cabeçalho -->
+                <!-- Linha 1: Títulos + Escudos -->
                 <tr>
-                    <th>Nº</th><th>APOSTADOR</th><th>Status</th>
-                    <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>J6</th><th>J7</th><th>J8</th>
+                    <th>Nº</th><th>Apostador</th><th>Status</th>
+                    <th>J1<div class="header-shield"><img src="Escudos/vasco.png">x<img src="Escudos/fluminense.png"></div></th>
+                    <th>J2<div class="header-shield"><img src="Escudos/atletico-mg.png">x<img src="Escudos/juventude.png"></div></th>
+                    <th>J3<div class="header-shield"><img src="Escudos/santos.png">x<img src="Escudos/remo.png"></div></th>
+                    <th>J4<div class="header-shield"><img src="Escudos/palmeiras.png">x<img src="Escudos/fortaleza.png"></div></th>
+                    <th>J5<div class="header-shield"><img src="Escudos/mirassol.png">x<img src="Escudos/gremio.png"></div></th>
+                    <th>J6<div class="header-shield"><img src="Escudos/chapecoense.png">x<img src="Escudos/cruzeiro.png"></div></th>
+                    <th>J7<div class="header-shield"><img src="Escudos/internacional.png">x<img src="Escudos/corinthians.png"></div></th>
+                    <th>J8<div class="header-shield"><img src="Escudos/atletico-paranaense.png">x<img src="Escudos/vitoria.png"></div></th>
                     <th>Total</th><th>Ações</th>
                 </tr>
-                <!-- Linha de Escudos -->
+                <!-- Linha 2: Placar Oficial -->
                 <tr style="background: var(--card-bg);">
-                    <td colspan="3">Escudos</td>
-                    <td><img src="Escudos/vasco.png" width="20">x<img src="Escudos/fluminense.png" width="20"></td>
-                    <td><img src="Escudos/atletico-mg.png" width="20">x<img src="Escudos/juventude.png" width="20"></td>
-                    <td><img src="Escudos/santos.png" width="20">x<img src="Escudos/remo.png" width="20"></td>
-                    <td><img src="Escudos/palmeiras.png" width="20">x<img src="Escudos/fortaleza.png" width="20"></td>
-                    <td><img src="Escudos/mirassol.png" width="20">x<img src="Escudos/gremio.png" width="20"></td>
-                    <td><img src="Escudos/chapecoense.png" width="20">x<img src="Escudos/cruzeiro.png" width="20"></td>
-                    <td><img src="Escudos/internacional.png" width="20">x<img src="Escudos/corinthians.png" width="20"></td>
-                    <td><img src="Escudos/atletico-paranaense.png" width="20">x<img src="Escudos/vitoria.png" width="20"></td>
-                    <td colspan="2"></td>
-                </tr>
-                <!-- Linha de Placar Oficial (onde o Admin digita o resultado) -->
-                <tr>
-                    <td colspan="3">Placar Oficial</td>
+                    <td colspan="3" style="font-weight:bold;">Placar Oficial</td>
                     <td><input type="text" id="placar-0" onchange="atualizarPlacarOficial(0, this.value)"></td>
                     <td><input type="text" id="placar-1" onchange="atualizarPlacarOficial(1, this.value)"></td>
                     <td><input type="text" id="placar-2" onchange="atualizarPlacarOficial(2, this.value)"></td>
@@ -62,13 +60,12 @@
                     <td colspan="2"></td>
                 </tr>
             </thead>
-            <!-- O corpo abaixo será preenchido pelo seu Script -->
             <tbody id="tabela-corpo"></tbody>
         </table>
     </div>
 
     <script>
-        // === SEU SCRIPT DO FIREBASE (O QUE VOCÊ ME ENVIOU) ===
+        // === CONFIGURAÇÃO E LÓGICA (MANTIDA) ===
         const firebaseConfig = {
             apiKey: "AIzaSyCxWK8_GMj6K75p3_scifj5w5M42UrizoU",
             authDomain: "bolao-bec5c.firebaseapp.com",
@@ -140,8 +137,11 @@
 
                 let tr = document.createElement('tr');
                 tr.innerHTML = `<td>${index + 1}º</td><td>${p.nome}</td>
-                <td><select onchange="atualizarStatus('${p.id}', this.value)"><option value="Pendente" ${p.status === 'Pendente'?'selected':''}>Pendente</option><option value="Pago" ${p.status === 'Pago'?'selected':''}>Pago</option></select></td>
-                ${colunasJogos}<td>${p.totalPontos} pts</td><td><button onclick="removerApostador('${p.id}')">✕</button></td>`;
+                <td><select onchange="atualizarStatus('${p.id}', this.value)" style="background:#1e293b; color:white; border:none; padding:2px;">
+                    <option value="Pendente" ${p.status === 'Pendente'?'selected':''}>Pendente</option>
+                    <option value="Pago" ${p.status === 'Pago'?'selected':''}>Pago</option>
+                </select></td>
+                ${colunasJogos}<td>${p.totalPontos} pts</td><td><button onclick="removerApostador('${p.id}')" style="cursor:pointer; background:transparent; border:none; color:white;">✕</button></td>`;
                 tbody.appendChild(tr);
             });
         }
