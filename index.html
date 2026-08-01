@@ -155,8 +155,8 @@
                     <option value="Pendente" ${p.status === 'Pendente'?'selected':''}>Pendente</option>
                     <option value="Pago" ${p.status === 'Pago'?'selected':''}>Pago</option>
                 </select></td>
-                ${colunasJogos}<td>${p.totalPontos} pts</td>// A CORREÇÃO (CERTA - Manda o ID e o Nome)
-<td><button onclick="removerApostador('${p.id}', '${p.nome}')" style="cursor:pointer; background:transparent; border:none; color:white;">✕</button></td>`;
+                ${colunasJogos}<td>${p.totalPontos} pts</td>
+                <td><button onclick="removerApostador('${p.id}', '${p.nome}')" style="cursor:pointer; background:transparent; border:none; color:white;">✕</button></td>`;
                 tbody.appendChild(tr);
             });
         }
@@ -164,7 +164,6 @@
         function atualizarPlacarOficial(jIndex, valor) { placaresOficiais[jIndex] = valor.trim(); dbPlacares.set(placaresOficiais); }
         function atualizarStatus(id, valor) { dbApostadores.child(id).update({ status: valor }); }
         function removerApostador(id, nomeApostador) {
-            // Usamos crases (`) para montar a mensagem dinâmica com o nome
             if (confirm(`Tem certeza que deseja apagar permanentemente a aposta de "${nomeApostador}"? Esta ação não pode ser desfeita.`)) {
                 dbApostadores.child(id).remove();
             }
