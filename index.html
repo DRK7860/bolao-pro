@@ -7,54 +7,42 @@
     <style>
         :root {
             --bg-color: #0f172a; --card-bg: #1e293b; --text-color: #f8fafc;
-            --accent-color: #38bdf8; --accent-green: #22c55e; --accent-red: #ef4444;
-            --gold: #eab308; --border-color: #334155;
+            --accent-green: #22c55e; --accent-red: #ef4444; --border-color: #334155;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 1200px; }
+        table { width: 100%; border-collapse: collapse; color: white; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid var(--border-color); text-align: center; }
+        button { cursor: pointer; border: none; border-radius: 4px; padding: 8px 15px; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Tabela -->
-        <table id="tabelaParticipantes" style="width: 100%; border-collapse: collapse; color: white;">
+        <button onclick="adicionarLinha()" style="background: var(--accent-green); color: white; margin-bottom: 10px;">+ Adicionar Participante</button>
+        
+        <table id="tabelaParticipantes">
             <thead>
                 <tr>
-                    <th colspan="11" style="text-align: right; padding-bottom: 10px;">
-                        <button onclick="adicionarLinha()" style="background: var(--accent-green); color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 4px; font-weight: bold;">+ Adicionar Participante</button>
-                    </th>
+                    <th>APOSTADOR</th><th>STATUS</th>
+                    <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>J6</th><th>J7</th><th>J8</th>
+                    <th>AÇÕES</th>
                 </tr>
-                <!-- Linha dos Jogos (J1, J2...) -->
-                <tr>
-                    <th style="padding: 10px;">APOSTADOR</th>
-                    <th style="padding: 10px;">STATUS</th>
-                    <th style="padding: 10px;">J1</th>
-                    <th style="padding: 10px;">J2</th>
-                    <th style="padding: 10px;">J3</th>
-                    <th style="padding: 10px;">J4</th>
-                    <th style="padding: 10px;">J5</th>
-                    <th style="padding: 10px;">J6</th>
-                    <th style="padding: 10px;">J7</th>
-                    <th style="padding: 10px;">J8</th>
-                    <th style="padding: 10px;">AÇÕES</th>
-                </tr>
-                <!-- Nova Linha dos Escudos -->
-                <!-- Nova Linha dos Escudos -->
                 <tr style="background: var(--card-bg);">
-                    <td colspan="2"></td> 
-                    <td style="text-align: center;"><img src="Escudos/vasco.png" width="30"> x <img src="Escudos/fluminense.png" width="30"></td>
-                    <td style="text-align: center;"><img src="Escudos/atletico-mg.png" width="30"> x <img src="Escudos/juventude.png" width="30"></td>
-                    <td style="text-align: center;"><img src="Escudos/santos.png" width="30"> x <img src="Escudos/remo.png" width="30"></td>
-                    <td style="text-align: center;"><img src="Escudos/palmeiras.png" width="30"> x <img src="Escudos/fortaleza.png" width="30"></td>
-                    <td style="text-align: center;"><img src="Escudos/mirassol.png" width="30"> x <img src="Escudos/gremio.png" width="30"></td>
-                    <td style="text-align: center;"><img src="Escudos/chapecoense.png" width="30"> x <img src="Escudos/cruzeiro.png" width="30"></td>
-                    <td style="text-align: center;"><img src="Escudos/internacional.png" width="30"> x <img src="Escudos/corinthians.png" width="30"></td>
-                    <td style="text-align: center;"><img src="Escudos/atletico-paranaense.png" width="30"> x <img src="Escudos/vitoria.png" width="30"></td>
+                    <td colspan="2">Escudos</td>
+                    <td><img src="Escudos/vasco.png" width="25"> x <img src="Escudos/fluminense.png" width="25"></td>
+                    <td><img src="Escudos/atletico-mg.png" width="25"> x <img src="Escudos/juventude.png" width="25"></td>
+                    <td><img src="Escudos/santos.png" width="25"> x <img src="Escudos/remo.png" width="25"></td>
+                    <td><img src="Escudos/palmeiras.png" width="25"> x <img src="Escudos/fortaleza.png" width="25"></td>
+                    <td><img src="Escudos/mirassol.png" width="25"> x <img src="Escudos/gremio.png" width="25"></td>
+                    <td><img src="Escudos/chapecoense.png" width="25"> x <img src="Escudos/cruzeiro.png" width="25"></td>
+                    <td><img src="Escudos/internacional.png" width="25"> x <img src="Escudos/corinthians.png" width="25"></td>
+                    <td><img src="Escudos/atletico-paranaense.png" width="25"> x <img src="Escudos/vitoria.png" width="25"></td>
                     <td></td>
                 </tr>
             </thead>
             <tbody id="listaParticipantes">
+                <!-- Os nomes dos jogadores aparecerão aqui quando você clicar no botão -->
             </tbody>
         </table>
     </div>
@@ -66,15 +54,12 @@
             tr.innerHTML = `
                 <td><input type="text" placeholder="Nome" style="width: 90%; padding: 5px;"></td>
                 <td><select><option>Pendente</option><option>Pago</option></select></td>
-                ${'<td><input type="text" style="width: 40px; padding: 5px;"></td>'.repeat(8)}
-                <td><button onclick="removerLinha(this)" style="background: var(--accent-red); color: white; border: none; padding: 5px 10px; cursor: pointer;">X</button></td>
+                ${'<td><input type="text" style="width: 30px; padding: 5px;"></td>'.repeat(8)}
+                <td><button onclick="removerLinha(this)" style="background: var(--accent-red); color: white;">X</button></td>
             `;
             tbody.appendChild(tr);
         }
-
-        function removerLinha(btn) {
-            btn.parentNode.parentNode.remove();
-        }
+        function removerLinha(btn) { btn.parentNode.parentNode.remove(); }
     </script>
 </body>
 </html>
