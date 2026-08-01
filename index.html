@@ -18,7 +18,6 @@
         table { width: 100%; border-collapse: collapse; margin-top: 20px; color: white; font-size: 0.9rem; }
         th, td { padding: 8px; border: 1px solid var(--border-color); text-align: center; }
         
-        /* Estilo dos Escudos e Inputs */
         .header-shield { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 5px; }
         .header-shield img { width: 20px; height: 20px; }
         input[type="text"] { width: 45px; text-align: center; background: #334155; color: white; border: 1px solid #475569; padding: 2px; border-radius: 4px; }
@@ -33,7 +32,6 @@
         <h1>Painel ADM</h1>
         <table id="tabelaParticipantes">
             <thead>
-                <!-- Linha 1: Títulos + Escudos -->
                 <tr>
                     <th>Nº</th><th>Apostador</th><th>Status</th>
                     <th>J1<div class="header-shield"><img src="Escudos/vasco.png">x<img src="Escudos/fluminense.png"></div></th>
@@ -44,11 +42,14 @@
                     <th>J6<div class="header-shield"><img src="Escudos/chapecoense.png">x<img src="Escudos/cruzeiro.png"></div></th>
                     <th>J7<div class="header-shield"><img src="Escudos/internacional.png">x<img src="Escudos/corinthians.png"></div></th>
                     <th>J8<div class="header-shield"><img src="Escudos/atletico-paranaense.png">x<img src="Escudos/vitoria.png"></div></th>
-                    <th>Total</th><th>Ações</th>
+                    <th>Total</th><th></th> <!-- Espaço vazio onde era Ações -->
                 </tr>
-                <!-- Linha 2: Placar Oficial -->
-                <tr style="background: var(--card-bg);">
-                    <td colspan="3" style="font-weight:bold;">Placar Oficial</td>
+            </thead>
+            <tbody id="tabela-corpo"></tbody>
+            <!-- Linha do Placar Oficial movida para o rodapé -->
+            <tfoot style="background: var(--card-bg);">
+                <tr>
+                    <td colspan="3" style="font-weight:bold; text-align: right; padding-right: 20px;">Placar Oficial</td>
                     <td><input type="text" id="placar-0" onchange="atualizarPlacarOficial(0, this.value)"></td>
                     <td><input type="text" id="placar-1" onchange="atualizarPlacarOficial(1, this.value)"></td>
                     <td><input type="text" id="placar-2" onchange="atualizarPlacarOficial(2, this.value)"></td>
@@ -59,13 +60,11 @@
                     <td><input type="text" id="placar-7" onchange="atualizarPlacarOficial(7, this.value)"></td>
                     <td colspan="2"></td>
                 </tr>
-            </thead>
-            <tbody id="tabela-corpo"></tbody>
+            </tfoot>
         </table>
     </div>
 
     <script>
-        // === CONFIGURAÇÃO E LÓGICA (MANTIDA) ===
         const firebaseConfig = {
             apiKey: "AIzaSyCxWK8_GMj6K75p3_scifj5w5M42UrizoU",
             authDomain: "bolao-bec5c.firebaseapp.com",
