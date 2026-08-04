@@ -23,19 +23,19 @@
         #btn-status { padding: 10px 20px; border-radius: 20px; border: none; cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: background 0.3s; }
 
         .painel-placar { background: var(--card-bg); padding: 10px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border-color); }
-        .grid-placar { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+        .grid-placar { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
         .input-group { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-        .input-group label { font-size: 0.7rem; font-weight: bold; }
+        .input-group label { font-size: 0.75rem; font-weight: bold; color: #00d2ff; }
         
         .table-container { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         
         table { width: 100%; min-width: 600px; border-collapse: collapse; color: white; font-size: 0.85rem; }
-        th, td { padding: 6px; border: 1px solid var(--border-color); text-align: center; }
+        th, td { padding: 8px; border: 1px solid var(--border-color); text-align: center; }
         
-        .header-shield { display: flex; align-items: center; justify-content: center; gap: 2px; margin-top: 3px; }
-        .header-shield img { width: 18px; height: 18px; }
+        .header-shield { display: flex; align-items: center; justify-content: center; gap: 3px; margin-top: 3px; }
+        .header-shield img { width: 18px; height: 18px; object-fit: contain; }
         
-        input[type="text"] { width: 40px; text-align: center; background: #334155; color: white; border: 1px solid #475569; padding: 4px; border-radius: 4px; }
+        input[type="text"] { width: 45px; text-align: center; background: #334155; color: white; border: 1px solid #475569; padding: 5px; border-radius: 4px; font-weight: bold; }
         
         .acerto-exato { background-color: var(--exato); }
         .acerto-parcial { background-color: var(--parcial); }
@@ -55,14 +55,11 @@
         <div class="painel-placar">
             <h3 style="text-align: center; margin-bottom: 8px; font-size: 1rem;">Placar Oficial</h3>
             <div class="grid-placar">
-                <div class="input-group"><label>J1</label><input type="text" id="placar-0" onchange="atualizarPlacarOficial(0, this.value)"></div>
-                <div class="input-group"><label>J2</label><input type="text" id="placar-1" onchange="atualizarPlacarOficial(1, this.value)"></div>
-                <div class="input-group"><label>J3</label><input type="text" id="placar-2" onchange="atualizarPlacarOficial(2, this.value)"></div>
-                <div class="input-group"><label>J4</label><input type="text" id="placar-3" onchange="atualizarPlacarOficial(3, this.value)"></div>
-                <div class="input-group"><label>J5</label><input type="text" id="placar-4" onchange="atualizarPlacarOficial(4, this.value)"></div>
-                <div class="input-group"><label>J6</label><input type="text" id="placar-5" onchange="atualizarPlacarOficial(5, this.value)"></div>
-                <div class="input-group"><label>J7</label><input type="text" id="placar-6" onchange="atualizarPlacarOficial(6, this.value)"></div>
-                <div class="input-group"><label>J8</label><input type="text" id="placar-7" onchange="atualizarPlacarOficial(7, this.value)"></div>
+                <div class="input-group"><label>J1 (Grêmio x SP)</label><input type="text" id="placar-0" onchange="atualizarPlacarOficial(0, this.value)"></div>
+                <div class="input-group"><label>J2 (Palmeiras x Inter)</label><input type="text" id="placar-1" onchange="atualizarPlacarOficial(1, this.value)"></div>
+                <div class="input-group"><label>J3 (Bragantino x Cor)</label><input type="text" id="placar-2" onchange="atualizarPlacarOficial(2, this.value)"></div>
+                <div class="input-group"><label>J4 (Santos x A.PR)</label><input type="text" id="placar-3" onchange="atualizarPlacarOficial(3, this.value)"></div>
+                <div class="input-group"><label>J5 (Flamengo x Vit)</label><input type="text" id="placar-4" onchange="atualizarPlacarOficial(4, this.value)"></div>
             </div>
         </div>
 
@@ -71,15 +68,12 @@
                 <thead>
                     <tr>
                         <th>Nº</th><th>Apostador</th><th>Status</th>
-                        <th>J1<div class="header-shield"><img src="Escudos/vasco.png">x<img src="Escudos/fluminense.png"></div></th>
-                        <th>J2<div class="header-shield"><img src="Escudos/atletico-mg.png">x<img src="Escudos/juventude.png"></div></th>
-                        <th>J3<div class="header-shield"><img src="Escudos/santos.png">x<img src="Escudos/remo.png"></div></th>
-                        <th>J4<div class="header-shield"><img src="Escudos/palmeiras.png">x<img src="Escudos/fortaleza.png"></div></th>
-                        <th>J5<div class="header-shield"><img src="Escudos/mirassol.png">x<img src="Escudos/gremio.png"></div></th>
-                        <th>J6<div class="header-shield"><img src="Escudos/chapecoense.png">x<img src="Escudos/cruzeiro.png"></div></th>
-                        <th>J7<div class="header-shield"><img src="Escudos/internacional.png">x<img src="Escudos/corinthians.png"></div></th>
-                        <th>J8<div class="header-shield"><img src="Escudos/atletico-paranaense.png">x<img src="Escudos/vitoria.png"></div></th>
-                        <th>Total</th><th></th>
+                        <th>J1<div class="header-shield"><img src="Escudos/gremio.png">x<img src="Escudos/sao-paulo.png"></div></th>
+                        <th>J2<div class="header-shield"><img src="Escudos/palmeiras.png">x<img src="Escudos/internacional.png"></div></th>
+                        <th>J3<div class="header-shield"><img src="Escudos/red-bull.png">x<img src="Escudos/corinthians.png"></div></th>
+                        <th>J4<div class="header-shield"><img src="Escudos/santos.png">x<img src="Escudos/atletico-mg.png"></div></th>
+                        <th>J5<div class="header-shield"><img src="Escudos/flamengo.png">x<img src="Escudos/vitoria.png"></div></th>
+                        <th>Total</th><th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="tabela-corpo"></tbody>
@@ -110,9 +104,11 @@
             if (abertas === false) {
                 btn.innerText = "🔒 Apostas Fechadas";
                 btn.style.backgroundColor = "#ef4444";
+                btn.style.color = "white";
             } else {
                 btn.innerText = "✅ Apostas Abertas";
                 btn.style.backgroundColor = "#22c55e";
+                btn.style.color = "white";
             }
         });
 
@@ -123,12 +119,11 @@
             });
         }
 
-        // --- Lógica original mantida ---
         let apostadoresMap = {};
-        let placaresOficiais = ['', '', '', '', '', '', '', ''];
+        let placaresOficiais = ['', '', '', '', ''];
 
         dbPlacares.on('value', (snapshot) => {
-            placaresOficiais = snapshot.val() || ['', '', '', '', '', '', '', ''];
+            placaresOficiais = snapshot.val() || ['', '', '', '', ''];
             preencherPlacaresOficiaisNaTela();
             renderizarTabela();
         });
@@ -165,37 +160,52 @@
             tbody.innerHTML = '';
             let lista = Object.keys(apostadoresMap).map(key => {
                 const p = apostadoresMap[key];
-                let palpites = Array.isArray(p.palpites) ? p.palpites : (p.palpites && typeof p.palpites === 'object' ? Object.values(p.palpites) : ['', '', '', '', '', '', '', '']);
+                let palpites = Array.isArray(p.palpites) ? p.palpites : (p.palpites && typeof p.palpites === 'object' ? Object.values(p.palpites) : ['', '', '', '', '']);
+                
+                // Formata caso o palpite venha como objeto do array do Firebase
+                let palpitesFormatados = palpites.map(item => {
+                    return typeof item === 'object' && item !== null ? item.palpite : item;
+                });
+
                 let total = 0;
-                palpites.forEach((palpite, i) => { total += calcularPontosJogo(palpite, placaresOficiais[i]).pts; });
-                return { id: key, ...p, palpitesArr: palpites, totalPontos: total };
+                palpitesFormatados.forEach((palpite, i) => { 
+                    total += calcularPontosJogo(palpite, placaresOficiais[i]).pts; 
+                });
+                return { id: key, ...p, palpitesArr: palpitesFormatados, totalPontos: total };
             }).filter(p => p.nome && p.nome.trim() !== '');
 
             lista.sort((a, b) => b.totalPontos !== a.totalPontos ? b.totalPontos - a.totalPontos : (a.nome || '').localeCompare(b.nome || ''));
 
             lista.forEach((p, index) => {
-                const colunasJogos = Array.from({ length: 8 }).map((_, jIndex) => {
+                const colunasJogos = Array.from({ length: 5 }).map((_, jIndex) => {
                     const res = calcularPontosJogo(p.palpitesArr[jIndex] || '', placaresOficiais[jIndex]);
                     let classe = res.tipo === 'exato' ? 'acerto-exato' : (res.tipo === 'parcial' ? 'acerto-parcial' : (res.tipo === 'erro' ? 'erro-jogo' : ''));
                     return `<td class="${classe}">${p.palpitesArr[jIndex] || '-'}</td>`;
                 }).join('');
 
                 let tr = document.createElement('tr');
-                tr.innerHTML = `<td>${index + 1}º</td><td>${p.nome}</td>
-                <td><select onchange="atualizarStatus('${p.id}', this.value)" style="background:#1e293b; color:white; border:none; padding:2px;">
+                tr.innerHTML = `<td>${index + 1}º</td><td><b>${p.nome}</b></td>
+                <td><select onchange="atualizarStatus('${p.id}', this.value)" style="background:#1e293b; color:white; border:1px solid #475569; padding:4px; border-radius:4px;">
                     <option value="Pendente" ${p.status === 'Pendente'?'selected':''}>Pendente</option>
                     <option value="Pago" ${p.status === 'Pago'?'selected':''}>Pago</option>
                 </select></td>
-                ${colunasJogos}<td>${p.totalPontos} pts</td>
-                <td><button onclick="removerApostador('${p.id}', '${p.nome}')" style="cursor:pointer; background:transparent; border:none; color:white;">✕</button></td>`;
+                ${colunasJogos}<td><b>${p.totalPontos} pts</b></td>
+                <td><button onclick="removerApostador('${p.id}', '${p.nome}')" style="cursor:pointer; background:transparent; border:none; color:#ef4444; font-weight:bold; font-size:1.1rem;">✕</button></td>`;
                 tbody.appendChild(tr);
             });
         }
 
-        function atualizarPlacarOficial(jIndex, valor) { placaresOficiais[jIndex] = valor.trim(); dbPlacares.set(placaresOficiais); }
-        function atualizarStatus(id, valor) { dbApostadores.child(id).update({ status: valor }); }
+        function atualizarPlacarOficial(jIndex, valor) { 
+            placaresOficiais[jIndex] = valor.trim(); 
+            dbPlacares.set(placaresOficiais); 
+        }
+        
+        function atualizarStatus(id, valor) { 
+            dbApostadores.child(id).update({ status: valor }); 
+        }
+        
         function removerApostador(id, nomeApostador) {
-            if (confirm(`Tem certeza que deseja apagar permanentemente a aposta de "${nomeApostador}"? Esta ação não pode ser desfeita.`)) {
+            if (confirm(`Tem certeza que deseja apagar permanentemente a aposta de "${nomeApostador}"?`)) {
                 dbApostadores.child(id).remove();
             }
         }
